@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.UUID;
 
@@ -19,7 +20,7 @@ public class UserResource {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<?> add(@RequestBody User user) {
+    public ResponseEntity<?> add(@Valid @RequestBody User user) {
         User savedUser = userService.save(user);
         URI locationUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("api/users/{uuid}")

@@ -2,8 +2,10 @@ package ai.tech.web.exception.handler;
 
 import ai.tech.web.exception.ExceptionResponse;
 import ai.tech.web.exception.UserNotFoundException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +29,8 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     }
 
     @ExceptionHandler
-    protected ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException userNotFoundException, WebRequest webRequest) {
+    protected ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException userNotFoundException,
+                                                                 WebRequest webRequest) {
         ExceptionResponse exceptionResponse = ExceptionResponse.builder()
                 .timeStamp(new Date())
                 .message(userNotFoundException.getMessage())
@@ -35,5 +38,18 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
                 .build();
 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException methodArgumentNotValidException,
+            HttpHeaders httpHeaders, HttpStatus httpStatus, WebRequest webRequest) {
+        ExceptionResponse exceptionResponse = ExceptionResponse.builder()
+                .timeStamp(new Date())
+                .message("Validation failed.")
+                .detail(methodArgumentNotValidException.getBindingResult().toString())
+                .build();
+
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 }
