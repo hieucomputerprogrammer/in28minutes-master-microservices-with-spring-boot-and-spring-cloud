@@ -4,8 +4,7 @@ import ai.tech.domain.common.BaseEntity;
 import lombok.*;
 
 import javax.persistence.Entity;
-import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.Date;
 import java.util.UUID;
 
 @Getter
@@ -14,16 +13,14 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 @Entity
-public class CoffeeBean extends BaseEntity {
+public class User extends BaseEntity {
     private String name;
-    private String color;
-    private BigDecimal price;
+    private Date birthday;
 
     @Builder
-    public CoffeeBean(UUID uuid, String name, String color, BigDecimal price) {
+    public User(UUID uuid, String name, Date birthday) {
         super(uuid);
         this.name = name;
-        this.color = color;
-        this.price = price;
+        this.birthday = birthday;
     }
 }

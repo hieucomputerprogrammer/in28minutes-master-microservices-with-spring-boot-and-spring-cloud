@@ -1,9 +1,6 @@
 package ai.tech.domain.common;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -25,5 +22,5 @@ public class BaseEntity implements Serializable {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Type(type="org.hibernate.type.UUIDCharType")
     @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
-    private UUID id;
+    private UUID uuid;
 }
