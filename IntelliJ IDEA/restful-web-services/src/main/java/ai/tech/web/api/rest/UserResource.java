@@ -4,13 +4,21 @@ import ai.tech.domain.User;
 import ai.tech.service.UserService;
 import ai.tech.web.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -20,7 +28,7 @@ public class UserResource {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<?> add(@Valid @RequestBody User user) {
+    public ResponseEntity<URI> add(@Valid @RequestBody User user) {
         User savedUser = userService.save(user);
         URI locationUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("api/users/{uuid}")
@@ -31,21 +39,25 @@ public class UserResource {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAll() {
+    public ResponseEntity<List<User>> getAll() {
         return ResponseEntity.ok(userService.findAll());
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<?> getById(@PathVariable("uuid") UUID uuid) {
+    public ResponseEntity<EntityModel<User>> getById(@PathVariable("uuid") UUID uuid) {
         User foundUser = userService.findById(uuid);
         if (foundUser == null)
             throw new UserNotFoundException("User with UUID: " + uuid + " is not found.");
 
-        return new ResponseEntity<User>(foundUser, HttpStatus.FOUND);
+        EntityModel foundUserEntityModel = EntityModel.of(foundUser);
+        WebMvcLinkBuilder linkToUsers = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getAll());
+        foundUserEntityModel.add(linkToUsers.withRel("all-users"));
+
+        return ResponseEntity.ok(foundUserEntityModel);
     }
 
     @DeleteMapping("/{uuid}")
-    public ResponseEntity<?> deleteById(@PathVariable("uuid") UUID uuid) {
+    public ResponseEntity<Void> deleteById(@PathVariable("uuid") UUID uuid) {
         if (userService.findById(uuid) == null)
             throw new UserNotFoundException("User with UUID: " + uuid + " does not exist.");
 
