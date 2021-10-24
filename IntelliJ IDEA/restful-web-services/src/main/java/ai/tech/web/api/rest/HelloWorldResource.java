@@ -12,18 +12,18 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/hello-world")
 public class HelloWorldResource {
-    @GetMapping
-    public String helloWorld() {
-        return "Hello, Spring! :D";
-    }
+  @GetMapping
+  public String helloWorld() {
+    return "Hello, Spring! :D";
+  }
 
-    @GetMapping("java")
-    public CoffeeBean coffeeBean() {
-        return new CoffeeBean(UUID.randomUUID(), "Java", "Brown", new BigDecimal("5.0"));
-    }
+  @GetMapping("java")
+  public CoffeeBean coffeeBean() {
+    return new CoffeeBean(UUID.randomUUID(), "Java", "Brown", new BigDecimal("5.0"));
+  }
 
-    @GetMapping("/{name}")
-    public String sayHello(@PathVariable("name") String name) {
-        return "Hello, " + name + "! :D";
-    }
+  @GetMapping("/{name}")
+  public String sayHello(@PathVariable("name") String name) {
+    return "Hello, " + name + "! :D";
+  }
 }

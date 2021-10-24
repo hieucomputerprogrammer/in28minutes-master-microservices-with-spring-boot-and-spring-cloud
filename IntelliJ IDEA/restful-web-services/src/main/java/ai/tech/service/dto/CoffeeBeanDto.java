@@ -1,4 +1,3 @@
 package ai.tech.service.dto;
 
-public class CoffeeBeanDto {
-}
+public class CoffeeBeanDto {}

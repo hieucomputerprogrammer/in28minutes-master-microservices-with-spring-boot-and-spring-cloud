@@ -1,4 +1,3 @@
 package ai.tech.service.mapper;
 
-public class CoffeeBeanMapper {
-}
+public class CoffeeBeanMapper {}

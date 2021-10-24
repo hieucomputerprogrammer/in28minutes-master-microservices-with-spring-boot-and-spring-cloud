@@ -25,43 +25,45 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/users")
 public class UserResource {
-    private final UserService userService;
+  private final UserService userService;
 
-    @PostMapping
-    public ResponseEntity<URI> add(@Valid @RequestBody User user) {
-        User savedUser = userService.save(user);
-        URI locationUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("api/users/{uuid}")
-                .buildAndExpand(savedUser.getUuid())
-                .toUri();
+  @PostMapping
+  public ResponseEntity<URI> add(@Valid @RequestBody User user) {
+    User savedUser = userService.save(user);
+    URI locationUri =
+        ServletUriComponentsBuilder.fromCurrentContextPath()
+            .path("api/users/{uuid}")
+            .buildAndExpand(savedUser.getUuid())
+            .toUri();
 
-        return ResponseEntity.created(locationUri).build();
-    }
+    return ResponseEntity.created(locationUri).build();
+  }
 
-    @GetMapping
-    public ResponseEntity<List<User>> getAll() {
-        return ResponseEntity.ok(userService.findAll());
-    }
+  @GetMapping
+  public ResponseEntity<List<User>> getAll() {
+    return ResponseEntity.ok(userService.findAll());
+  }
 
-    @GetMapping("/{uuid}")
-    public ResponseEntity<EntityModel<User>> getById(@PathVariable("uuid") UUID uuid) {
-        User foundUser = userService.findById(uuid);
-        if (foundUser == null)
-            throw new UserNotFoundException("User with UUID: " + uuid + " is not found.");
+  @GetMapping("/{uuid}")
+  public ResponseEntity<EntityModel<User>> getById(@PathVariable("uuid") UUID uuid) {
+    User foundUser = userService.findById(uuid);
+    if (foundUser == null)
+      throw new UserNotFoundException("User with UUID: " + uuid + " is not found.");
 
-        EntityModel foundUserEntityModel = EntityModel.of(foundUser);
-        WebMvcLinkBuilder linkToUsers = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getAll());
-        foundUserEntityModel.add(linkToUsers.withRel("all-users"));
+    EntityModel foundUserEntityModel = EntityModel.of(foundUser);
+    WebMvcLinkBuilder linkToUsers =
+        WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getAll());
+    foundUserEntityModel.add(linkToUsers.withRel("all-users"));
 
-        return ResponseEntity.ok(foundUserEntityModel);
-    }
+    return ResponseEntity.ok(foundUserEntityModel);
+  }
 
-    @DeleteMapping("/{uuid}")
-    public ResponseEntity<Void> deleteById(@PathVariable("uuid") UUID uuid) {
-        if (userService.findById(uuid) == null)
-            throw new UserNotFoundException("User with UUID: " + uuid + " does not exist.");
+  @DeleteMapping("/{uuid}")
+  public ResponseEntity<Void> deleteById(@PathVariable("uuid") UUID uuid) {
+    if (userService.findById(uuid) == null)
+      throw new UserNotFoundException("User with UUID: " + uuid + " does not exist.");
 
-        userService.deleteById(uuid);
-        return ResponseEntity.noContent().build();
-    }
+    userService.deleteById(uuid);
+    return ResponseEntity.noContent().build();
+  }
 }

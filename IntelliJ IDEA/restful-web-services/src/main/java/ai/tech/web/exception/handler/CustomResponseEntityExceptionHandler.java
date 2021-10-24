@@ -17,39 +17,44 @@ import java.util.Date;
 @ControllerAdvice
 @RestController
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
-    @ExceptionHandler
-    protected ResponseEntity<Object> handleExceptions(Exception exception, WebRequest webRequest) {
-        ExceptionResponse exceptionResponse = ExceptionResponse.builder()
-                .timeStamp(new Date())
-                .message(exception.getMessage())
-                .detail(webRequest.getDescription(false))
-                .build();
+  @ExceptionHandler
+  protected ResponseEntity<Object> handleExceptions(Exception exception, WebRequest webRequest) {
+    ExceptionResponse exceptionResponse =
+        ExceptionResponse.builder()
+            .timeStamp(new Date())
+            .message(exception.getMessage())
+            .detail(webRequest.getDescription(false))
+            .build();
 
-        return ResponseEntity.internalServerError().body(exceptionResponse);
-    }
+    return ResponseEntity.internalServerError().body(exceptionResponse);
+  }
 
-    @ExceptionHandler
-    protected ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException userNotFoundException,
-                                                                 WebRequest webRequest) {
-        ExceptionResponse exceptionResponse = ExceptionResponse.builder()
-                .timeStamp(new Date())
-                .message(userNotFoundException.getMessage())
-                .detail(webRequest.getDescription(false))
-                .build();
+  @ExceptionHandler
+  protected ResponseEntity<Object> handleUserNotFoundException(
+      UserNotFoundException userNotFoundException, WebRequest webRequest) {
+    ExceptionResponse exceptionResponse =
+        ExceptionResponse.builder()
+            .timeStamp(new Date())
+            .message(userNotFoundException.getMessage())
+            .detail(webRequest.getDescription(false))
+            .build();
 
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
-    }
+    return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+  }
 
-    @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(
-            MethodArgumentNotValidException methodArgumentNotValidException,
-            HttpHeaders httpHeaders, HttpStatus httpStatus, WebRequest webRequest) {
-        ExceptionResponse exceptionResponse = ExceptionResponse.builder()
-                .timeStamp(new Date())
-                .message("Validation failed.")
-                .detail(methodArgumentNotValidException.getBindingResult().toString())
-                .build();
+  @Override
+  protected ResponseEntity<Object> handleMethodArgumentNotValid(
+      MethodArgumentNotValidException methodArgumentNotValidException,
+      HttpHeaders httpHeaders,
+      HttpStatus httpStatus,
+      WebRequest webRequest) {
+    ExceptionResponse exceptionResponse =
+        ExceptionResponse.builder()
+            .timeStamp(new Date())
+            .message("Validation failed.")
+            .detail(methodArgumentNotValidException.getBindingResult().toString())
+            .build();
 
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
-    }
+    return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+  }
 }

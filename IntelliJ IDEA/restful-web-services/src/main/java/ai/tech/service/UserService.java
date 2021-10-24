@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
-    User save(User user);
+  User save(User user);
 
-    List<User> findAll();
+  List<User> findAll();
 
-    User findById(UUID uuid);
+  User findById(UUID uuid);
 
-    void deleteById(UUID uuid);
+  void deleteById(UUID uuid);
 }

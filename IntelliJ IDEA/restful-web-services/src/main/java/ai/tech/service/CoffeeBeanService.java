@@ -1,4 +1,3 @@
 package ai.tech.service;
 
-public interface CoffeeBeanService {
-}
+public interface CoffeeBeanService {}

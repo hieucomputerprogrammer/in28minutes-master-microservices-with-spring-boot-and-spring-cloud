@@ -18,7 +18,7 @@ import java.util.Date;
 @EqualsAndHashCode
 @Builder
 public class ExceptionResponse {
-    private Date timeStamp;
-    private String message;
-    private String detail;
+  private Date timeStamp;
+  private String message;
+  private String detail;
 }

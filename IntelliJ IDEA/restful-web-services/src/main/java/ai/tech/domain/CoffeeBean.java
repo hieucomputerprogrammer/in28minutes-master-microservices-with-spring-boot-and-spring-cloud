@@ -4,7 +4,6 @@ import ai.tech.domain.common.BaseEntity;
 import lombok.*;
 
 import javax.persistence.Entity;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
 
@@ -15,15 +14,15 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 public class CoffeeBean extends BaseEntity {
-    private String name;
-    private String color;
-    private BigDecimal price;
+  private String name;
+  private String color;
+  private BigDecimal price;
 
-    @Builder
-    public CoffeeBean(UUID uuid, String name, String color, BigDecimal price) {
-        super(uuid);
-        this.name = name;
-        this.color = color;
-        this.price = price;
-    }
+  @Builder
+  public CoffeeBean(UUID uuid, String name, String color, BigDecimal price) {
+    super(uuid);
+    this.name = name;
+    this.color = color;
+    this.price = price;
+  }
 }

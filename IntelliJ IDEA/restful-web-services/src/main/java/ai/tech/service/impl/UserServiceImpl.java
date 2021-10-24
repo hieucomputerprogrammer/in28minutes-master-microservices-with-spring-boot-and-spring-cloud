@@ -12,25 +12,25 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
-    private final UserRepository userRepository;
+  private final UserRepository userRepository;
 
-    @Override
-    public User save(User user) {
-        return this.userRepository.save(user);
-    }
+  @Override
+  public User save(User user) {
+    return this.userRepository.save(user);
+  }
 
-    @Override
-    public List<User> findAll() {
-        return this.userRepository.findAll();
-    }
+  @Override
+  public List<User> findAll() {
+    return this.userRepository.findAll();
+  }
 
-    @Override
-    public User findById(UUID uuid) {
-        return this.userRepository.findById(uuid);
-    }
+  @Override
+  public User findById(UUID uuid) {
+    return this.userRepository.findById(uuid);
+  }
 
-    @Override
-    public void deleteById(UUID uuid) {
-        this.userRepository.deleteById(uuid);
-    }
+  @Override
+  public void deleteById(UUID uuid) {
+    this.userRepository.deleteById(uuid);
+  }
 }

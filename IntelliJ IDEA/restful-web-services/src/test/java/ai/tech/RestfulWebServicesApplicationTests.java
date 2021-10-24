@@ -3,9 +3,8 @@ package ai.tech;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-//@SpringBootTest
+@SpringBootTest
 class RestfulWebServicesApplicationTests {
-    @Test
-    void contextLoads() {
-    }
+  @Test
+  void contextLoads() {}
 }

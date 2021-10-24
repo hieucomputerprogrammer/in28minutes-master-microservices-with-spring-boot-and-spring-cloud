@@ -10,35 +10,47 @@ import java.util.UUID;
 
 @Repository
 public class UserRepository {
-    private static List<User> users = new ArrayList<User>();
+  private static List<User> users = new ArrayList<User>();
 
-    static {
-        users.add(User.builder().uuid(UUID.randomUUID()).name("Hieu").birthday(new Date(1994, 7, 13)).build());
-        users.add(User.builder().uuid(UUID.randomUUID()).name("James Gosling").birthday(new Date(1955, 5, 19)).build());
-        users.add(User.builder().uuid(UUID.randomUUID()).name("Guido Van Rossum").birthday(new Date(1956, 1, 31)).build());
-    }
+  static {
+    users.add(
+        User.builder()
+            .uuid(UUID.randomUUID())
+            .name("Hieu")
+            .birthday(new Date(1994, 7, 13))
+            .build());
+    users.add(
+        User.builder()
+            .uuid(UUID.randomUUID())
+            .name("James Gosling")
+            .birthday(new Date(1955, 5, 19))
+            .build());
+    users.add(
+        User.builder()
+            .uuid(UUID.randomUUID())
+            .name("Guido Van Rossum")
+            .birthday(new Date(1956, 1, 31))
+            .build());
+  }
 
-    public User save(User user) {
-        user.setUuid(UUID.randomUUID());
-        users.add(user);
+  public User save(User user) {
+    user.setUuid(UUID.randomUUID());
+    users.add(user);
 
-        return user;
-    }
+    return user;
+  }
 
-    public List<User> findAll() {
-        return this.users;
-    }
+  public List<User> findAll() {
+    return this.users;
+  }
 
-    public User findById(UUID uuid) {
-        for (User user : this.users)
-            return user.getUuid().equals(uuid) ? user : null;
+  public User findById(UUID uuid) {
+    for (User user : this.users) return user.getUuid().equals(uuid) ? user : null;
+    return null;
+  }
 
-        return null;
-    }
-
-    public void deleteById(UUID uuid) {
-        for (User user : this.users)
-            if (user.getUuid().equals(uuid))
-                this.users.remove(this.findById(uuid));
-    }
+  public void deleteById(UUID uuid) {
+    for (User user : this.users)
+      if (user.getUuid().equals(uuid)) this.users.remove(this.findById(uuid));
+  }
 }
