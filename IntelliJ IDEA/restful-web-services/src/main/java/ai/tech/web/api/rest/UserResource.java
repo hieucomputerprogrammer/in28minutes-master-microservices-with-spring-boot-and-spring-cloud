@@ -28,7 +28,7 @@ public class UserResource {
   private final UserService userService;
 
   @PostMapping
-  public ResponseEntity<URI> add(@Valid @RequestBody User user) {
+  public ResponseEntity<URI> add(final @Valid @RequestBody User user) {
     User savedUser = userService.save(user);
     URI locationUri =
         ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -45,7 +45,7 @@ public class UserResource {
   }
 
   @GetMapping("/{uuid}")
-  public ResponseEntity<EntityModel<User>> getById(@PathVariable("uuid") UUID uuid) {
+  public ResponseEntity<EntityModel<User>> getById(final @PathVariable("uuid") UUID uuid) {
     User foundUser = userService.findById(uuid);
     if (foundUser == null)
       throw new UserNotFoundException("User with UUID: " + uuid + " is not found.");
@@ -59,7 +59,7 @@ public class UserResource {
   }
 
   @DeleteMapping("/{uuid}")
-  public ResponseEntity<Void> deleteById(@PathVariable("uuid") UUID uuid) {
+  public ResponseEntity<Void> deleteById(final @PathVariable("uuid") UUID uuid) {
     if (userService.findById(uuid) == null)
       throw new UserNotFoundException("User with UUID: " + uuid + " does not exist.");
 
