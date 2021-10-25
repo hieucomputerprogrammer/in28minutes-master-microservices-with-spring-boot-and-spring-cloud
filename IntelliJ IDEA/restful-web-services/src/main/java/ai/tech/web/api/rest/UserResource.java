@@ -29,8 +29,8 @@ public class UserResource {
 
   @PostMapping
   public ResponseEntity<URI> add(final @Valid @RequestBody User user) {
-    User savedUser = userService.save(user);
-    URI locationUri =
+    final User savedUser = userService.save(user);
+    final URI locationUri =
         ServletUriComponentsBuilder.fromCurrentContextPath()
             .path("api/users/{uuid}")
             .buildAndExpand(savedUser.getUuid())
@@ -46,7 +46,7 @@ public class UserResource {
 
   @GetMapping("/{uuid}")
   public ResponseEntity<EntityModel<User>> getById(final @PathVariable("uuid") UUID uuid) {
-    User foundUser = userService.findById(uuid);
+    final User foundUser = userService.findById(uuid);
     if (foundUser == null)
       throw new UserNotFoundException("User with UUID: " + uuid + " is not found.");
 
