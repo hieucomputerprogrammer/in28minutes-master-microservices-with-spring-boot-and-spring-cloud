@@ -3,6 +3,10 @@ spring:
     name: restful-web-services
   banner:
     location: classpath:banner/banner.txt
+  security:
+    user:
+      name: hieu
+      password: hieu
 
 server:
   port: 0

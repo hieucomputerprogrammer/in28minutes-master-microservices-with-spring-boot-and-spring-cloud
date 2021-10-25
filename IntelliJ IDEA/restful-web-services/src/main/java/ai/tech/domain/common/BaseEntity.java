@@ -1,5 +1,6 @@
 package ai.tech.domain.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
+//@JsonIgnoreProperties(value = {"createdDate", "updatedDate", "createdBy", "updatedBy"}) // Static filtering.
 public class BaseEntity implements Serializable {
   @Id
   @GeneratedValue(generator = "UUID")

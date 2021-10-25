@@ -1,6 +1,7 @@
 package ai.tech.domain;
 
 import ai.tech.domain.common.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode(callSuper = false)
 @Entity
+@JsonFilter(value = "UserFilter") // Dynamic filtering.
 public class User extends BaseEntity {
   @Size(min = 2, message = "Name should contains at least 2 characters.")
   private String name;
