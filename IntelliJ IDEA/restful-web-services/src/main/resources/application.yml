@@ -7,6 +7,18 @@ spring:
     user:
       name: hieu
       password: hieu
+  jpa:
+    defer-datasource-initialization: true
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:users
+    username: sa
+    password: ""
 
 server:
   port: 0

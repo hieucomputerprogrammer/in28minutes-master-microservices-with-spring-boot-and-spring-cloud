@@ -1,6 +1,5 @@
 package ai.tech.domain.common;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -13,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -31,7 +31,7 @@ public class BaseEntity implements Serializable {
 
   @CreationTimestamp
   @Column(updatable = false)
-  private Timestamp createdDate;
+  private Timestamp createdDate = Timestamp.valueOf(LocalDateTime.now());
 
   @UpdateTimestamp private Timestamp updatedDate;
 

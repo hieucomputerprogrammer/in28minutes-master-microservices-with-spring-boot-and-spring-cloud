@@ -3,8 +3,8 @@ package ai.tech.repository;
 import ai.tech.domain.User;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,19 +17,19 @@ public class UserRepository {
         User.builder()
             .uuid(UUID.randomUUID())
             .name("Hieu")
-            .birthday(new Date(1994, 7, 13))
+            .birthday(Timestamp.valueOf("1994-07-13 00:00:00"))
             .build());
     users.add(
         User.builder()
             .uuid(UUID.randomUUID())
             .name("James Gosling")
-            .birthday(new Date(1955, 5, 19))
+            .birthday(Timestamp.valueOf("1955-05-19 00:00:00"))
             .build());
     users.add(
         User.builder()
             .uuid(UUID.randomUUID())
             .name("Guido Van Rossum")
-            .birthday(new Date(1956, 1, 31))
+            .birthday(Timestamp.valueOf("1956-01-31 00:00:00"))
             .build());
   }
 

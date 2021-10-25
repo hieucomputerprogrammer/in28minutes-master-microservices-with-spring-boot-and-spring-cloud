@@ -7,7 +7,7 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 @Getter
@@ -21,10 +21,10 @@ public class User extends BaseEntity {
   @Size(min = 2, message = "Name should contains at least 2 characters.")
   private String name;
 
-  @Past private Date birthday;
+  @Past private Timestamp birthday;
 
   @Builder
-  public User(UUID uuid, String name, Date birthday) {
+  public User(UUID uuid, String name, Timestamp birthday) {
     super(uuid);
     this.name = name;
     this.birthday = birthday;

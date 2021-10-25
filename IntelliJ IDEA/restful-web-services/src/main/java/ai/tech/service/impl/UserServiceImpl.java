@@ -1,7 +1,7 @@
 package ai.tech.service.impl;
 
 import ai.tech.domain.User;
-import ai.tech.repository.UserRepository;
+import ai.tech.repository.UserJpaRepository;
 import ai.tech.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
-  private final UserRepository userRepository;
+  private final UserJpaRepository userRepository;
 
   @Override
   public User save(User user) {
@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User findById(UUID uuid) {
-    return this.userRepository.findById(uuid);
+    return this.userRepository.findById(uuid).get();
   }
 
   @Override
