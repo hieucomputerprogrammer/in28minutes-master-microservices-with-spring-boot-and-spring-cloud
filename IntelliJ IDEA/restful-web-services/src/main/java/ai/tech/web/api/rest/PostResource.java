@@ -1,7 +1,7 @@
 package ai.tech.web.api.rest;
 
-import ai.tech.domain.User;
-import ai.tech.service.UserService;
+import ai.tech.domain.Post;
+import ai.tech.service.PostService;
 import ai.tech.web.exception.NotFoundException;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -27,35 +27,36 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/users")
-public class UserResource {
-  private final UserService userService;
+@RequestMapping("/api/posts")
+public class PostResource {
+  private final PostService postService;
 
   @PostMapping
-  public ResponseEntity<URI> add(final @Valid @RequestBody User user) {
-    final User savedUser = userService.save(user);
+  public ResponseEntity<URI> add(final @Valid @RequestBody Post post) {
+    final Post savedPost = postService.save(post);
     final URI locationUri =
         ServletUriComponentsBuilder.fromCurrentContextPath()
-            .path("api/users/{uuid}")
-            .buildAndExpand(savedUser.getUuid())
+            .path("api/posts/{uuid}")
+            .buildAndExpand(savedPost.getUuid())
             .toUri();
 
     return ResponseEntity.created(locationUri).build();
   }
 
-  private FilterProvider filterUsers() {
-    final SimpleBeanPropertyFilter simpleBeanPropertyFilter
-            = SimpleBeanPropertyFilter.filterOutAllExcept("uuid", "name", "birthday", "posts");
-    final FilterProvider filterProvider = new SimpleFilterProvider().addFilter("UserFilter", simpleBeanPropertyFilter);
+  private FilterProvider filterPosts() {
+    final SimpleBeanPropertyFilter simpleBeanPropertyFilter =
+        SimpleBeanPropertyFilter.filterOutAllExcept("uuid", "title", "summary", "content", "user");
+    final FilterProvider filterProvider =
+        new SimpleFilterProvider().addFilter("PostFilter", simpleBeanPropertyFilter);
 
     return filterProvider;
   }
 
   @GetMapping
   public ResponseEntity<MappingJacksonValue> getAll() {
-    final List<User> usersList = userService.findAll();
-    final FilterProvider filterProvider = this.filterUsers();
-    final MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(usersList);
+    final List<Post> postsList = this.postService.findAll();
+    final FilterProvider filterProvider = this.filterPosts();
+    final MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(postsList);
     mappingJacksonValue.setFilters(filterProvider);
 
     return ResponseEntity.ok(mappingJacksonValue);
@@ -63,16 +64,16 @@ public class UserResource {
 
   @GetMapping("/{uuid}")
   public ResponseEntity<MappingJacksonValue> getById(final @PathVariable("uuid") UUID uuid) {
-    final User foundUser = userService.findById(uuid);
-    if (foundUser == null)
-      throw new NotFoundException("User with UUID: " + uuid + " is not found.");
+    final Post foundPost = this.postService.findById(uuid);
+    if (foundPost == null)
+      throw new NotFoundException("Post with UUID: " + uuid + " is not found.");
 
-    final EntityModel foundUserEntityModel = EntityModel.of(foundUser);
+    final EntityModel foundUserEntityModel = EntityModel.of(foundPost);
     final WebMvcLinkBuilder linkToUsers =
         WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getAll());
-    foundUserEntityModel.add(linkToUsers.withRel("all-users"));
+    foundUserEntityModel.add(linkToUsers.withRel("all-posts"));
 
-    final FilterProvider filterProvider = this.filterUsers();
+    final FilterProvider filterProvider = this.filterPosts();
     final MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(foundUserEntityModel);
     mappingJacksonValue.setFilters(filterProvider);
 
@@ -81,10 +82,10 @@ public class UserResource {
 
   @DeleteMapping("/{uuid}")
   public ResponseEntity<Void> deleteById(final @PathVariable("uuid") UUID uuid) {
-    if (userService.findById(uuid) == null)
-      throw new NotFoundException("User with UUID: " + uuid + " does not exist.");
+    if (this.postService.findById(uuid) == null)
+      throw new NotFoundException("Post with UUID: " + uuid + " does not exist.");
 
-    userService.deleteById(uuid);
+    this.postService.deleteById(uuid);
     return ResponseEntity.noContent().build();
   }
 }

@@ -1,7 +1,7 @@
 package ai.tech.web.exception.handler;
 
 import ai.tech.web.exception.ExceptionResponse;
-import ai.tech.web.exception.UserNotFoundException;
+import ai.tech.web.exception.NotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,11 +31,11 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 
   @ExceptionHandler
   protected ResponseEntity<Object> handleUserNotFoundException(
-      UserNotFoundException userNotFoundException, WebRequest webRequest) {
+          NotFoundException notFoundException, WebRequest webRequest) {
     ExceptionResponse exceptionResponse =
         ExceptionResponse.builder()
             .timeStamp(new Date())
-            .message(userNotFoundException.getMessage())
+            .message(notFoundException.getMessage())
             .detail(webRequest.getDescription(false))
             .build();
 
