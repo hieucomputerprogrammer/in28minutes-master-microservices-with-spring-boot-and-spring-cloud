@@ -29,19 +29,20 @@ public class InitialDataBootstrap implements ApplicationListener<ContextRefreshe
   }
 
   private void initializeData() {
-    User hieu = this.userRepository.save(
+    UUID hieuUUID = UUID.randomUUID();
+    this.userRepository.save(
         User.builder()
-            .uuid(UUID.randomUUID())
+            .uuid(hieuUUID)
             .name("Hieu Minh Le")
             .birthday(Timestamp.valueOf("1994-07-13 00:00:00"))
             .build());
-    Post coreJava = this.postRepository.save(
+    this.postRepository.save(
         Post.builder()
             .title("Core Java")
             .summary("Java SE")
             .content("Refer to: https://docs.oracle.com/javase/tutorial/java/")
+            .user(new User(hieuUUID))
             .build());
-    coreJava.setUser(hieu);
 
     UUID jamesGoslingUUID = UUID.randomUUID();
     this.userRepository.save(
@@ -55,7 +56,7 @@ public class InitialDataBootstrap implements ApplicationListener<ContextRefreshe
             .title("Java for Enterprises")
             .summary("Java EE")
             .content("Refer to: https://www.oracle.com/java/technologies/jee-tutorials.html")
-//            .user(new User(jamesGoslingUUID))
+            .user(new User(jamesGoslingUUID))
             .build());
 
     UUID guidoVanRossumUUID = UUID.randomUUID();
@@ -70,7 +71,7 @@ public class InitialDataBootstrap implements ApplicationListener<ContextRefreshe
             .title("Spring Framework for Enterprises")
             .summary("Spring Framework")
             .content("Refer to: https://spring.io")
-//            .user(new User(guidoVanRossumUUID))
+            .user(new User(guidoVanRossumUUID))
             .build());
 
     UUID timBernersLeeUUID = UUID.randomUUID();
@@ -85,7 +86,7 @@ public class InitialDataBootstrap implements ApplicationListener<ContextRefreshe
             .title("Quarkus for Enterprises")
             .summary("Quarkus")
             .content("Refer to: https://quarkus.io")
-//            .user(new User(timBernersLeeUUID))
+            .user(new User(timBernersLeeUUID))
             .build());
 
     UUID vintCerfUUID = UUID.randomUUID();
@@ -100,7 +101,7 @@ public class InitialDataBootstrap implements ApplicationListener<ContextRefreshe
             .title("Micronaut for Enterprises")
             .summary("Micronaut Framework")
             .content("Refer to: https://micronaut.io")
-//            .user(new User(vintCerfUUID))
+            .user(new User(vintCerfUUID))
             .build());
   }
 }
