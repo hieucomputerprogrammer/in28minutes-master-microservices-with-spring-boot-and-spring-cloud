@@ -3,14 +3,15 @@ package ai.tech.service;
 import ai.tech.domain.Post;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface PostService {
-  Post save(Post post);
+  Optional<Post> save(Post post);
 
-  List<Post> findAll();
+  Optional<List<Post>> findAll();
 
-  Post findById(UUID uuid);
+  Optional<Post> findById(UUID uuid);
 
   void deleteById(UUID uuid);
 }

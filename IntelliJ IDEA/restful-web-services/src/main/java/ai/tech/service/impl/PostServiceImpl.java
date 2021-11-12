@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -15,18 +16,18 @@ public class PostServiceImpl implements PostService {
   private final PostJpaRepository postRepository;
 
   @Override
-  public Post save(final Post post) {
-    return this.postRepository.save(post);
+  public Optional<Post> save(final Post post) {
+    return Optional.of(this.postRepository.save(post));
   }
 
   @Override
-  public List<Post> findAll() {
-    return this.postRepository.findAll();
+  public Optional<List<Post>> findAll() {
+    return Optional.of(this.postRepository.findAll());
   }
 
   @Override
-  public Post findById(final UUID uuid) {
-    return this.postRepository.findById(uuid).get();
+  public Optional<Post> findById(final UUID uuid) {
+    return Optional.of(this.postRepository.findById(uuid).get());
   }
 
   @Override

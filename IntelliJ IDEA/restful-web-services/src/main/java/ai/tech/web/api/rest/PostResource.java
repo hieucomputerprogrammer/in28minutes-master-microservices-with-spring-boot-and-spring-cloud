@@ -33,7 +33,7 @@ public class PostResource {
 
   @PostMapping
   public ResponseEntity<URI> add(final @Valid @RequestBody Post post) {
-    final Post savedPost = postService.save(post);
+    final Post savedPost = postService.save(post).get();
     final URI locationUri =
         ServletUriComponentsBuilder.fromCurrentContextPath()
             .path("api/posts/{uuid}")
@@ -54,7 +54,7 @@ public class PostResource {
 
   @GetMapping
   public ResponseEntity<MappingJacksonValue> getAll() {
-    final List<Post> postsList = this.postService.findAll();
+    final List<Post> postsList = this.postService.findAll().get();
     final FilterProvider filterProvider = this.filterPosts();
     final MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(postsList);
     mappingJacksonValue.setFilters(filterProvider);
@@ -64,7 +64,7 @@ public class PostResource {
 
   @GetMapping("/{uuid}")
   public ResponseEntity<MappingJacksonValue> getById(final @PathVariable("uuid") UUID uuid) {
-    final Post foundPost = this.postService.findById(uuid);
+    final Post foundPost = this.postService.findById(uuid).get();
     if (foundPost == null)
       throw new NotFoundException("Post with UUID: " + uuid + " is not found.");
 

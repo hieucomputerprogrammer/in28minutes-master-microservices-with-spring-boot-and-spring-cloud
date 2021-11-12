@@ -2,6 +2,7 @@ package ai.tech.domain;
 
 import ai.tech.domain.common.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -22,13 +23,14 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode(callSuper = false)
 @Entity
-@JsonFilter(value = "PostFilter")
+//@JsonFilter(value = "PostFilter")
 public class Post extends BaseEntity {
   private String title;
   private String summary;
   private String content;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+  @JsonIgnore
   private User user;
 
   @Builder

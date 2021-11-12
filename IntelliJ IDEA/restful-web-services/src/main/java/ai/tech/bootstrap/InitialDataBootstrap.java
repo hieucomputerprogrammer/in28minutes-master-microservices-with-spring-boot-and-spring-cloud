@@ -43,64 +43,64 @@ public class InitialDataBootstrap implements ApplicationListener<ContextRefreshe
             .build());
     coreJava.setUser(hieu);
 
-//    UUID jamesGoslingUUID = UUID.randomUUID();
-//    this.userRepository.save(
-//        User.builder()
-//            .uuid(jamesGoslingUUID)
-//            .name("James Gosling")
-//            .birthday(Timestamp.valueOf("1955-05-19 00:00:00"))
-//            .build());
-//    this.postRepository.save(
-//        Post.builder()
-//            .title("Java for Enterprises")
-//            .summary("Java EE")
-//            .content("Refer to: https://www.oracle.com/java/technologies/jee-tutorials.html")
+    UUID jamesGoslingUUID = UUID.randomUUID();
+    this.userRepository.save(
+        User.builder()
+            .uuid(jamesGoslingUUID)
+            .name("James Gosling")
+            .birthday(Timestamp.valueOf("1955-05-19 00:00:00"))
+            .build());
+    this.postRepository.save(
+        Post.builder()
+            .title("Java for Enterprises")
+            .summary("Java EE")
+            .content("Refer to: https://www.oracle.com/java/technologies/jee-tutorials.html")
 //            .user(new User(jamesGoslingUUID))
-//            .build());
-//
-//    UUID guidoVanRossumUUID = UUID.randomUUID();
-//    this.userRepository.save(
-//        User.builder()
-//            .uuid(guidoVanRossumUUID)
-//            .name("Guido Van Rossum")
-//            .birthday(Timestamp.valueOf("1956-01-31 00:00:00"))
-//            .build());
-//    this.postRepository.save(
-//        Post.builder()
-//            .title("Spring Framework for Enterprises")
-//            .summary("Spring Framework")
-//            .content("Refer to: https://spring.io")
+            .build());
+
+    UUID guidoVanRossumUUID = UUID.randomUUID();
+    this.userRepository.save(
+        User.builder()
+            .uuid(guidoVanRossumUUID)
+            .name("Guido Van Rossum")
+            .birthday(Timestamp.valueOf("1956-01-31 00:00:00"))
+            .build());
+    this.postRepository.save(
+        Post.builder()
+            .title("Spring Framework for Enterprises")
+            .summary("Spring Framework")
+            .content("Refer to: https://spring.io")
 //            .user(new User(guidoVanRossumUUID))
-//            .build());
-//
-//    UUID timBernersLeeUUID = UUID.randomUUID();
-//    this.userRepository.save(
-//        User.builder()
-//            .uuid(timBernersLeeUUID)
-//            .name("Tim Berners-Lee")
-//            .birthday(Timestamp.valueOf("1955-06-08 00:00:00"))
-//            .build());
-//    this.postRepository.save(
-//        Post.builder()
-//            .title("Quarkus for Enterprises")
-//            .summary("Quarkus")
-//            .content("Refer to: https://quarkus.io")
+            .build());
+
+    UUID timBernersLeeUUID = UUID.randomUUID();
+    this.userRepository.save(
+        User.builder()
+            .uuid(timBernersLeeUUID)
+            .name("Tim Berners-Lee")
+            .birthday(Timestamp.valueOf("1955-06-08 00:00:00"))
+            .build());
+    this.postRepository.save(
+        Post.builder()
+            .title("Quarkus for Enterprises")
+            .summary("Quarkus")
+            .content("Refer to: https://quarkus.io")
 //            .user(new User(timBernersLeeUUID))
-//            .build());
-//
-//    UUID vintCerfUUID = UUID.randomUUID();
-//    this.userRepository.save(
-//        User.builder()
-//            .uuid(vintCerfUUID)
-//            .name("Vinton Gray \"Vint\" Cerf")
-//            .birthday(Timestamp.valueOf("1943-06-23 00:00:00"))
-//            .build());
-//    this.postRepository.save(
-//        Post.builder()
-//            .title("Micronaut for Enterprises")
-//            .summary("Micronaut Framework")
-//            .content("Refer to: https://micronaut.io")
+            .build());
+
+    UUID vintCerfUUID = UUID.randomUUID();
+    this.userRepository.save(
+        User.builder()
+            .uuid(vintCerfUUID)
+            .name("Vinton Gray \"Vint\" Cerf")
+            .birthday(Timestamp.valueOf("1943-06-23 00:00:00"))
+            .build());
+    this.postRepository.save(
+        Post.builder()
+            .title("Micronaut for Enterprises")
+            .summary("Micronaut Framework")
+            .content("Refer to: https://micronaut.io")
 //            .user(new User(vintCerfUUID))
-//            .build());
+            .build());
   }
 }
