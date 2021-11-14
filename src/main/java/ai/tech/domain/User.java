@@ -2,6 +2,7 @@ package ai.tech.domain;
 
 import ai.tech.domain.common.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.CascadeType;
@@ -20,7 +21,7 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode(callSuper = false)
 @Entity
-@JsonFilter(value = "UserFilter") // Dynamic filtering.
+//@JsonFilter(value = "UserFilter") // Dynamic filtering.
 public class User extends BaseEntity {
   @Size(min = 2, message = "Name should contains at least 2 characters.")
   private String name;
@@ -28,6 +29,7 @@ public class User extends BaseEntity {
   @Past private Timestamp birthday;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.MERGE)
+  @JsonIgnore
   private List<Post> posts;
 
   @Builder

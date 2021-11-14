@@ -38,11 +38,11 @@ public class UserResource {
 
   @PostMapping
   public ResponseEntity<URI> add(final @Valid @RequestBody User user) {
-    final User savedUser = userService.save(user).get();
+    final Optional<User> savedUser = userService.save(user);
     final URI locationUri =
         ServletUriComponentsBuilder.fromCurrentContextPath()
             .path("api/users/{uuid}")
-            .buildAndExpand(savedUser.getUuid())
+            .buildAndExpand(savedUser.get().getUuid())
             .toUri();
 
     return ResponseEntity.created(locationUri).build();

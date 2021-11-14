@@ -30,78 +30,94 @@ public class InitialDataBootstrap implements ApplicationListener<ContextRefreshe
 
   private void initializeData() {
     UUID hieuUUID = UUID.randomUUID();
-    this.userRepository.save(
+    User hieu = this.userRepository.save(
         User.builder()
             .uuid(hieuUUID)
             .name("Hieu Minh Le")
             .birthday(Timestamp.valueOf("1994-07-13 00:00:00"))
             .build());
-    this.postRepository.save(
+    Post coreJava = this.postRepository.save(
         Post.builder()
             .title("Core Java")
             .summary("Java SE")
             .content("Refer to: https://docs.oracle.com/javase/tutorial/java/")
-            .user(new User(hieuUUID))
             .build());
+    Post javaEnterpriseEdition = this.postRepository.save(
+            Post.builder()
+                    .title("Java Enterprise Edition")
+                    .summary("Java EE")
+                    .content("Refer to: https://www.oracle.com/java/technologies/java-ee-glance.html")
+                    .build()
+    );
+    Post android = this.postRepository.save(
+            Post.builder()
+                    .title("Android")
+                    .summary("Android - Formerly known as Java Mobile Edition (Java ME)")
+                    .content("Refer to: https://www.android.com/")
+                    .build()
+    );
+    coreJava.setUser(hieu);
+    javaEnterpriseEdition.setUser(hieu);
+    android.setUser(hieu);
 
     UUID jamesGoslingUUID = UUID.randomUUID();
-    this.userRepository.save(
+    User jamesGosling = this.userRepository.save(
         User.builder()
             .uuid(jamesGoslingUUID)
             .name("James Gosling")
             .birthday(Timestamp.valueOf("1955-05-19 00:00:00"))
             .build());
-    this.postRepository.save(
+    Post javaForEnterprise = this.postRepository.save(
         Post.builder()
             .title("Java for Enterprises")
             .summary("Java EE")
             .content("Refer to: https://www.oracle.com/java/technologies/jee-tutorials.html")
-            .user(new User(jamesGoslingUUID))
             .build());
+    javaForEnterprise.setUser(jamesGosling);
 
     UUID guidoVanRossumUUID = UUID.randomUUID();
-    this.userRepository.save(
+    User guidoVanRossum = this.userRepository.save(
         User.builder()
             .uuid(guidoVanRossumUUID)
             .name("Guido Van Rossum")
             .birthday(Timestamp.valueOf("1956-01-31 00:00:00"))
             .build());
-    this.postRepository.save(
+    Post springFrameworkForEnterprises = this.postRepository.save(
         Post.builder()
             .title("Spring Framework for Enterprises")
             .summary("Spring Framework")
             .content("Refer to: https://spring.io")
-            .user(new User(guidoVanRossumUUID))
             .build());
+    springFrameworkForEnterprises.setUser(guidoVanRossum);
 
     UUID timBernersLeeUUID = UUID.randomUUID();
-    this.userRepository.save(
+    User timBernersLee = this.userRepository.save(
         User.builder()
             .uuid(timBernersLeeUUID)
             .name("Tim Berners-Lee")
             .birthday(Timestamp.valueOf("1955-06-08 00:00:00"))
             .build());
-    this.postRepository.save(
+    Post quarkusForEnterprises = this.postRepository.save(
         Post.builder()
             .title("Quarkus for Enterprises")
             .summary("Quarkus")
             .content("Refer to: https://quarkus.io")
-            .user(new User(timBernersLeeUUID))
             .build());
+    quarkusForEnterprises.setUser(timBernersLee);
 
     UUID vintCerfUUID = UUID.randomUUID();
-    this.userRepository.save(
+    User vinCerf = this.userRepository.save(
         User.builder()
             .uuid(vintCerfUUID)
             .name("Vinton Gray \"Vint\" Cerf")
             .birthday(Timestamp.valueOf("1943-06-23 00:00:00"))
             .build());
-    this.postRepository.save(
+    Post micronautForEnterprises = this.postRepository.save(
         Post.builder()
             .title("Micronaut for Enterprises")
             .summary("Micronaut Framework")
             .content("Refer to: https://micronaut.io")
-            .user(new User(vintCerfUUID))
             .build());
+    micronautForEnterprises.setUser(vinCerf);
   }
 }

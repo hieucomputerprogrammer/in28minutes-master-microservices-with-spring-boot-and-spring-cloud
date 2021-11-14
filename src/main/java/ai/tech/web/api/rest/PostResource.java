@@ -1,6 +1,7 @@
 package ai.tech.web.api.rest;
 
 import ai.tech.domain.Post;
+import ai.tech.domain.User;
 import ai.tech.service.PostService;
 import ai.tech.web.exception.NotFoundException;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -33,11 +35,11 @@ public class PostResource {
 
   @PostMapping
   public ResponseEntity<URI> add(final @Valid @RequestBody Post post) {
-    final Post savedPost = postService.save(post).get();
+    final Optional<Post> savedPost = postService.save(post);
     final URI locationUri =
         ServletUriComponentsBuilder.fromCurrentContextPath()
             .path("api/posts/{uuid}")
-            .buildAndExpand(savedPost.getUuid())
+            .buildAndExpand(savedPost.get().getUuid())
             .toUri();
 
     return ResponseEntity.created(locationUri).build();
@@ -63,12 +65,12 @@ public class PostResource {
   }
 
   @GetMapping("/{uuid}")
-  public ResponseEntity<MappingJacksonValue> getById(final @PathVariable("uuid") UUID uuid) {
-    final Post foundPost = this.postService.findById(uuid).get();
-    if (foundPost == null)
+  public ResponseEntity<MappingJacksonValue> getByUuid(final @PathVariable("uuid") UUID uuid) {
+    final Optional<Post> foundPostOptional = this.postService.findById(uuid);
+    if (foundPostOptional.isEmpty())
       throw new NotFoundException("Post with UUID: " + uuid + " is not found.");
 
-    final EntityModel foundUserEntityModel = EntityModel.of(foundPost);
+    final EntityModel foundUserEntityModel = EntityModel.of(foundPostOptional.get());
     final WebMvcLinkBuilder linkToUsers =
         WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getAll());
     foundUserEntityModel.add(linkToUsers.withRel("all-posts"));
@@ -80,9 +82,28 @@ public class PostResource {
     return ResponseEntity.ok(mappingJacksonValue);
   }
 
+  @GetMapping("/{uuid}/owner")
+  public ResponseEntity<MappingJacksonValue> getUserByPostUuid(final @PathVariable("uuid") UUID uuid) {
+    final Optional<Post> foundPostOptional = this.postService.findById(uuid);
+    final Optional<User> foundUserOptional = Optional.of(foundPostOptional.get().getUser());
+    if (foundPostOptional.isEmpty())
+      throw new NotFoundException("Post with UUID: " + uuid + " is not found.");
+
+    final EntityModel foundUserEntityModel = EntityModel.of(foundUserOptional.get());
+    final WebMvcLinkBuilder linkToUsers =
+            WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getAll());
+    foundUserEntityModel.add(linkToUsers.withRel("all-posts"));
+
+    final FilterProvider filterProvider = this.filterPosts();
+    final MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(foundUserEntityModel);
+    mappingJacksonValue.setFilters(filterProvider);
+
+    return ResponseEntity.ok(mappingJacksonValue);
+  }
+
   @DeleteMapping("/{uuid}")
   public ResponseEntity<Void> deleteById(final @PathVariable("uuid") UUID uuid) {
-    if (this.postService.findById(uuid) == null)
+    if (this.postService.findById(uuid).isEmpty())
       throw new NotFoundException("Post with UUID: " + uuid + " does not exist.");
 
     this.postService.deleteById(uuid);
