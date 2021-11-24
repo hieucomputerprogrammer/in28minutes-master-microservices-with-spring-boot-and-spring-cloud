@@ -29,7 +29,6 @@ public class User extends BaseEntity {
   @Past private Timestamp birthday;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.MERGE)
-  @JsonIgnore
   private List<Post> posts;
 
   @Builder
